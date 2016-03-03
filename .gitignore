@@ -13,3 +13,4 @@ logs/*
 *.log
 private/*
 coverage.html
+
