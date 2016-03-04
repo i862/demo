@@ -24,12 +24,11 @@ app.get('/test',function(req,res){
 });
 app.post('/git/auto',function(req,res){
   console.log('=====================');
-  console.log('userAgents:  '+req.headers);
-  console.log('userAgent:  '+req.header);
+  console.log(req.headers);
   console.log('ref:  '+req.body.ref);
-  console.log('serverId:  '+req.repository.id);
-  console.log('serverName:  '+req.repository.name);
-  console.log('secret:  '+req.config.secret);
+  console.log('serverId:  '+req.body.repository.id);
+  console.log('serverName:  '+req.body.repository.name);
+  console.log('secret:  '+req.body.config.secret);
   console.log('=====================');
   callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
     callback(err, stdout, stderr);
