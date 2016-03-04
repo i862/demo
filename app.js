@@ -17,11 +17,7 @@ app.set('view engine', 'html');
 //app.use(serveStatic(__dirname + '/assets'));
 app.use(jsonParser);
 
-app.post('/git/auto/',function(req,res){
-  console.log("===================================");
-  console.log(req.body);
-  console.log("===================================");
-  console.log(req.headers.secret);
+app.post('/test',function(req,res){
   console.log(req.headers);
   res.send('ok');
 });
