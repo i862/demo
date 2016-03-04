@@ -23,6 +23,10 @@ app.post('/git/auto/',function(req,res){
   console.log(req.headers);
   res.send('ok');
 });
+app.get('/',function(req,res){
+  res.send('ok');
+});
+
 
 
 exports.server = app;
