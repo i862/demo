@@ -34,7 +34,7 @@ app.post('/git/auto',function(req,res){
   console.log('ref:  '+req.body.ref);
   console.log('serverId:  '+req.body.repository.id);
   console.log('serverName:  '+req.body.repository.name);
-  console.log('=====================');
+  console.log('==============e=======');
   res.send('ok');
 });
 
