@@ -26,7 +26,7 @@ app.post('/git/auto',function(req,res){
   callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
     callback(err, stdout, stderr);
   });
-  var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest();
+  var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest('hex');
 
   console.log(hmac);
   console.log('=====================');
