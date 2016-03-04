@@ -20,7 +20,7 @@ app.use(jsonParser);
 
 app.get('/test',function(req,res){
   console.log(req.headers);
-  res.send('helloe woereldee 1ee=e' + Date.now());
+  res.send('helloe woereldee e1ee=e' + Date.now());
 });
 app.post('/git/auto',function(req,res){
   var hmac = crypto.createHmac('sha1','amenema').update(req.body).digest();
