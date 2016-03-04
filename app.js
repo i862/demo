@@ -23,6 +23,7 @@ app.get('/test',function(req,res){
   res.send('hello world amen' + Date.now());
 });
 app.post('/git/auto',function(req,res){
+  console.log(req);
   callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
     callback(err, stdout, stderr);
   });
