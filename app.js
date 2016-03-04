@@ -23,7 +23,13 @@ app.get('/test',function(req,res){
   res.send('hello world 1' + Date.now());
 });
 app.post('/git/auto',function(req,res){
-  console.log(req);
+  console.log('=====================');
+  console.log('userAgent:  '+req.headers.User-Agent);
+  console.log('ref:  '+req.body.ref);
+  console.log('serverId:  '+req.repository.id);
+  console.log('serverName:  '+req.repository.name);
+  console.log('secret:  '+req.config.secret);
+  console.log('=====================');
   callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
     callback(err, stdout, stderr);
   });
