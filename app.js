@@ -9,6 +9,9 @@ var favicon = require('serve-favicon'),
   , handler = createHandler({ path: '/git/auto', secret: 'amenema' });
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var callfile = require('child_process');
+
+
 
 var app = express();
 app.engine('.html', ejs.__express);
@@ -25,18 +28,14 @@ app.get('/',function(req,res){
   res.send('ok');
 });
 function run_cmd(cmd, args, callback) {
-  var spawn = require('child_process').spawn;
-  var child = spawn(cmd, args);
-  var resp = "";
-
-  child.stdout.on('data', function(buffer) { resp += buffer.toString(); });
-  child.stdout.on('end', function() { callback (resp) });
+  callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
+    callback(err, stdout, stderr);
+  });
 }
 handler.on('push', function (event) {
   console.log('Received a push event for %s to %s',
     event.payload.repository.name,
     event.payload.ref);
-  run_cmd('sh', [__dirname + '/bash/autoPull.sh'], function(text){ console.log(text) });
 })
 
 exports.server = app;
