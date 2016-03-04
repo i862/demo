@@ -23,10 +23,10 @@ app.get('/test',function(req,res){
   res.send('helloe woereldee eee1ee=e' + Date.now());
 });
 app.post('/git/auto',function(req,res){
-  var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest();
   callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
     callback(err, stdout, stderr);
   });
+  var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest();
 
   console.log(hmac);
   console.log('=====================');
