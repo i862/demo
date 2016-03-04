@@ -26,6 +26,7 @@ app.post('/git/auto',function(req,res){
   callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
     callback(err, stdout, stderr);
   });
+
   console.log('=====================');
   console.log(req.headers);
   console.log('ref:  '+req.body.ref);
