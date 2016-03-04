@@ -29,7 +29,7 @@ app.post('/git/auto',function(req,res){
   var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest('hex');
 
   console.log(hmac);
-  console.log('=====================');
+  console.log('============e=========');
   console.log(req.headers);
   console.log('ref:  '+req.body.ref);
   console.log('serverId:  '+req.body.repository.id);
