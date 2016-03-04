@@ -27,7 +27,7 @@ app.post('/git/auto',function(req,res){
     callback(err, stdout, stderr);
   });
   console.log('=====================');
-  console.log('user-agent: ' + req.headers);
+  console.log(req.headers);
   console.log('ref:  '+req.body.ref);
   console.log('serverId:  '+req.body.repository.id);
   console.log('serverName:  '+req.body.repository.name);
