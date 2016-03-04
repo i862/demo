@@ -20,7 +20,7 @@ app.use(jsonParser);
 
 app.get('/test',function(req,res){
   console.log(req.headers);
-  res.send('hello world amen' + Date.now());
+  res.send('hello world 1' + Date.now());
 });
 app.post('/git/auto',function(req,res){
   console.log(req);
