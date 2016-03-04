@@ -20,7 +20,7 @@ app.use(jsonParser);
 
 app.get('/test',function(req,res){
   console.log(req.headers);
-  res.send('helloe worlde 1ee=e' + Date.now());
+  res.send('helloe worldee 1ee=e' + Date.now());
 });
 app.post('/git/auto',function(req,res){
   callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
