@@ -22,7 +22,7 @@ app.use(jsonParser);
 
 app.get('/test',function(req,res){
   console.log(req.headers);
-  res.send('amen');
+  res.send('ameneee');
 });
 app.get('/',function(req,res){
   res.send('ok');
