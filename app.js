@@ -24,7 +24,8 @@ app.get('/test',function(req,res){
 });
 app.post('/git/auto',function(req,res){
   console.log('=====================');
-  console.log('userAgent:  '+req.headers.User-Agent);
+  console.log('userAgents:  '+req.headers);
+  console.log('userAgent:  '+req.header);
   console.log('ref:  '+req.body.ref);
   console.log('serverId:  '+req.repository.id);
   console.log('serverName:  '+req.repository.name);
