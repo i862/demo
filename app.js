@@ -17,7 +17,7 @@ app.set('view engine', 'html');
 //app.use(serveStatic(__dirname + '/assets'));
 app.use(jsonParser);
 
-app.post('/test',function(req,res){
+app.get('/test',function(req,res){
   console.log(req.headers);
   res.send('ok');
 });
