@@ -6,5 +6,6 @@ git reset --hard origin/master
 git clean -f
 git pull
 git checkout master
-echo 'finished'
-echo 'finished'
+echo 'restart server'
+pm2 restart 0
+echo 'finish'
