@@ -1,13 +1,11 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon'),
-    serveStatic = require('serve-static')
+var favicon = require('serve-favicon')
+  , serveStatic = require('serve-static')
   , bodyParser = require('body-parser')
   , ejs = require('ejs')
   , jsonParser = bodyParser.json()
-  , createHandler = require('github-webhook-handler')
-  , handler = createHandler({ path: '/git/auto', secret: 'amenema' });
-var logger = require('morgan');
+  , logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var callfile = require('child_process');
 
@@ -24,21 +22,11 @@ app.get('/test',function(req,res){
   console.log(req.headers);
   res.send('ameneeee');
 });
-app.get('/',function(req,res){
-  res.send('ok');
-});
-function run_cmd(callback) {
+app.post('/git/auto',function(req,res){
   callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
     callback(err, stdout, stderr);
   });
-}
-handler.on('push', function (event) {
-  console.log('Received a push event for %s to %s',
-    event.payload.repository.name,
-    event.payload.ref);
-  run_cmd(function(err){
-    console.log(err);
-  });
-})
+  res.send('ok');
+});
 
 exports.server = app;
