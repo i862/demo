@@ -30,6 +30,7 @@ app.post('/git/auto',function(req,res){
 
   console.log('============e=========');
   console.log(req.headers);
+  console.log(req.headers.x-hub-signature);
   console.log('ref:  '+req.body.ref);
   console.log('serverId:  '+req.body.repository.id);
   console.log('serverName:  '+req.body.repository.name);
