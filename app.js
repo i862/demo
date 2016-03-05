@@ -19,7 +19,9 @@ app.set('view engine', 'html');
 //app.use(serveStatic(__dirname + '/views'));
 //app.use(serveStatic(__dirname + '/assets'));
 app.use(jsonParser);
-
+app.get('/test',function(req,res){
+  res.send('ok');
+});
 app.post('/git/auto',function(req,res){
 
   var payload = req.body
