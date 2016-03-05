@@ -10,6 +10,8 @@ var cookieParser = require('cookie-parser');
 var callfile = require('child_process');
 var crypto = require('crypto');
 
+var config = require('./auto_shell.config.js');
+
 
 var app = express();
 app.engine('.html', ejs.__express);
@@ -18,24 +20,48 @@ app.set('view engine', 'html');
 //app.use(serveStatic(__dirname + '/assets'));
 app.use(jsonParser);
 
-app.get('/test',function(req,res){
-  console.log(req.headers);
-  res.send('helloe woereldee ee1ee=e' + Date.now());
-});
 app.post('/git/auto',function(req,res){
-  callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
-    callback(err, stdout, stderr);
-  });
-  var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest('hex');
 
-  console.log('=========e3===e=========');
-  console.log('user-agent: ' + req.headers['user-agent']);
-  console.log('x-hub-signature: ' + req.headers['x-hub-signature']);
-  console.log('ref:  '+req.body.ref);
-  console.log('serverId:  '+req.body.repository.id);
-  console.log('serverName:  '+req.body.repository.name);
-  console.log('==============e=======');
-  res.send('ok');
+  var payload = req.body
+    , ref = payload.ref?payload.ref.split('/')[2]:''
+    , signature = req.headers['x-hub-signature']?req.headers['x-hub-signature'].split('=')[1]:''
+    , serverId = payload.repository?payload.repository.id:''
+    , serverName = payload.repository?payload.repository.name:''
+    , realRef = config.ref||''
+    , realServerId = config.serverId||''
+    , realServerName = config.serverName||''
+    , realShellPath = config.shellPath
+    , realSignature = crypto.createHmac('sha1',config.secret||'').update(JSON.stringify(payload)).digest('hex');
+
+  if(check(signature,realSignature,res,{code:403,msg:'wrong signature!'})
+      && check(ref,realRef,res,{code:403,msg:'wrong ref'})
+      && check(serverId,realServerId,res,{code:403,msg:'wrong serverId'})
+      && check(serverName,realServerName,res,{code:403,msg:'wrong serverName'})
+  ){
+    var shell = callfile.execFile((__dirname + realShellPath),function (err, stdout, stderr) {
+      callback(err, stdout, stderr);
+    });
+    shell.on('exit',function(code){
+      if(code != 0){
+        res.status(403).send("the shell is exit with code:" + code);
+      }else{
+       res.send("the shell named:" + realShellPath + " is exit with code 0 on the " + realServerName + '.');
+      }
+    });
+    shell.on('error',function(err){
+      res.status(500).send(err);
+    });
+  }
 });
+
+var check = function(value1,value2,res,result){
+  if(value1 && value2 && value1 == value2){
+    return true;
+  }else{
+    res.status(result.code||403).end(result.msg||'');
+    return false;
+  }
+};
+
 
 exports.server = app;
