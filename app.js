@@ -23,9 +23,9 @@ app.get('/test',function(req,res){
   res.send('helloe woereldee ee1ee=e' + Date.now());
 });
 app.post('/git/auto',function(req,res){
-  //callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
-  //  callback(err, stdout, stderr);
-  //});
+  callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
+    callback(err, stdout, stderr);
+  });
   var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest('hex');
 
   console.log('=========e3===e=========');
