@@ -23,14 +23,14 @@ app.get('/test',function(req,res){
   res.send('helloe woereldee ee1ee=e' + Date.now());
 });
 app.post('/git/auto',function(req,res){
-  callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
-    callback(err, stdout, stderr);
-  });
+  //callfile.execFile((__dirname + '/bash/autoPull.sh'),function (err, stdout, stderr) {
+  //  callback(err, stdout, stderr);
+  //});
   var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest('hex');
 
   console.log('=========e===e=========');
-  console.log(req.headers);
-  console.log(req.headers.x-hub-signature);
+  console.log('user-agent: ' + req.headers['user-agent']);
+  console.log('x-hub-signature: ' + req.headers['x-hub-signature']);
   console.log('ref:  '+req.body.ref);
   console.log('serverId:  '+req.body.repository.id);
   console.log('serverName:  '+req.body.repository.name);
