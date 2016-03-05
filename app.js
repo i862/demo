@@ -28,7 +28,7 @@ app.post('/git/auto',function(req,res){
   //});
   var hmac = crypto.createHmac('sha1','amenema').update(JSON.stringify(req.body)).digest('hex');
 
-  console.log('=========e===e=========');
+  console.log('=========e3===e=========');
   console.log('user-agent: ' + req.headers['user-agent']);
   console.log('x-hub-signature: ' + req.headers['x-hub-signature']);
   console.log('ref:  '+req.body.ref);
