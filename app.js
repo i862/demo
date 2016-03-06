@@ -24,14 +24,17 @@ app.get('/test',function(req,res){
 });
 app.post('/git/auto',function(req,res){
 
-  var payload = req.body
-    , ref = payload.ref?payload.ref.split('/')[2]:''
+  var payload = req.body;
+  if(!payload.ref){
+    return res.status(400).end('Warning! We have recorded your IP!');
+  }
+  var ref = payload.ref.split('/')[2]
     , signature = req.headers['x-hub-signature']?req.headers['x-hub-signature'].split('=')[1]:''
     , serverId = payload.repository?payload.repository.id:''
     , serverName = payload.repository?payload.repository.name:''
-    , config = configs["serverName"];
+    , config = configs[serverName||''];
   if(!config)
-    res.status(400).send('no this config!');
+    return res.status(400).send('no this config!');
   var
       realRef = config.ref||''
     , realServerId = config.serverId||''
