@@ -40,9 +40,7 @@ app.post('/git/auto',function(req,res){
       && check(serverId,realServerId,res,{code:403,msg:'wrong serverId'})
       && check(serverName,realServerName,res,{code:403,msg:'wrong serverName'})
   ){
-    var shell = callfile.execFile((__dirname + realShellPath),function (err, stdout, stderr) {
-      callback(err, stdout, stderr);
-    });
+    var shell = callfile.execFile((__dirname + realShellPath));
     shell.on('exit',function(code){
       if(code != 0){
         console.log('code not 0:'+ code);
