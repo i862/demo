@@ -10,7 +10,7 @@ var cookieParser = require('cookie-parser');
 var execFile = require('child_process').execFile;
 var crypto = require('crypto');
 
-var config = require('./auto_shell.config.js');
+var configs = require('./webhook.json');
 
 
 var app = express();
@@ -29,7 +29,11 @@ app.post('/git/auto',function(req,res){
     , signature = req.headers['x-hub-signature']?req.headers['x-hub-signature'].split('=')[1]:''
     , serverId = payload.repository?payload.repository.id:''
     , serverName = payload.repository?payload.repository.name:''
-    , realRef = config.ref||''
+    , config = configs["serverName"];
+  if(!config)
+    res.status(400).send('no this config!');
+  var
+      realRef = config.ref||''
     , realServerId = config.serverId||''
     , realServerName = config.serverName||''
     , realShellPath = config.shellPath
@@ -40,14 +44,7 @@ app.post('/git/auto',function(req,res){
       && check(serverId,realServerId,res,{code:403,msg:'wrong serverId'})
       && check(serverName,realServerName,res,{code:403,msg:'wrong serverName'})
   ){
-    execFile((__dirname + realShellPath),function(err){
-      if(err){
-        console.log(err);
-        res.status(400).send(err);
-      }
-      res.send("the shell named:" + realShellPath + " is exit with code 0 on the " + realServerName + '.');
-    });
-    console.log('--------test');
+    execFile((__dirname + realShellPath));
     res.send('ok');
   }
 });
