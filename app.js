@@ -20,7 +20,7 @@ app.set('view engine', 'html');
 //app.use(serveStatic(__dirname + '/assets'));
 app.use(jsonParser);
 app.get('/test',function(req,res){
-  res.send('o   k');
+  res.send('o    k');
 });
 app.post('/git/auto',function(req,res){
 
