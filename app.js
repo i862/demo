@@ -7,7 +7,7 @@ var favicon = require('serve-favicon')
   , jsonParser = bodyParser.json()
   , logger = require('morgan');
 var cookieParser = require('cookie-parser');
-var callfile = require('child_process');
+var execFile = require('child_process').execFile;
 var crypto = require('crypto');
 
 var config = require('./auto_shell.config.js');
@@ -40,20 +40,13 @@ app.post('/git/auto',function(req,res){
       && check(serverId,realServerId,res,{code:403,msg:'wrong serverId'})
       && check(serverName,realServerName,res,{code:403,msg:'wrong serverName'})
   ){
-    var shell = callfile.execFile((__dirname + realShellPath));
-    shell.on('exit',function(code){
-      if(code != 0){
-        console.log('code not 0:'+ code);
-        res.status(403).send("the shell is exit with code:" + code);
-      }else{
-        console.log('code is 0');
-        res.send("the shell named:" + realShellPath + " is exit with code 0 on the " + realServerName + '.');
+    execFile((__dirname + realShellPath),function(err){
+      if(err){
+        console.log(err);
+        res.status(400).send(err);
       }
-    });
-    shell.on('error',function(err){
-      console.log('process is error');
-      console.log(error);
-      res.status(500).send(err);
+      res.send("the shell named:" + realShellPath + " is exit with code 0 on the " + realServerName + '.');
+
     });
   }
 });
