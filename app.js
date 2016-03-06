@@ -45,12 +45,16 @@ app.post('/git/auto',function(req,res){
     });
     shell.on('exit',function(code){
       if(code != 0){
+        console.log('code not 0:'+ code);
         res.status(403).send("the shell is exit with code:" + code);
       }else{
-       res.send("the shell named:" + realShellPath + " is exit with code 0 on the " + realServerName + '.');
+        console.log('code is 0');
+        res.send("the shell named:" + realShellPath + " is exit with code 0 on the " + realServerName + '.');
       }
     });
     shell.on('error',function(err){
+      console.log('process is error');
+      console.log(error);
       res.status(500).send(err);
     });
   }
