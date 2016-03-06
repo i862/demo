@@ -3,7 +3,7 @@
  */
 
 var config = {
-  secret:'amenema',
+  secret:'amenema1',
   serverId:'53037395',
   serverName:'demo',
   shellPath:'/bash/autoPull.sh',
