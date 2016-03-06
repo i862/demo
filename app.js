@@ -46,8 +46,9 @@ app.post('/git/auto',function(req,res){
         res.status(400).send(err);
       }
       res.send("the shell named:" + realShellPath + " is exit with code 0 on the " + realServerName + '.');
-
     });
+    console.log('------test');
+    res.send('ok');
   }
 });
 
