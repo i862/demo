@@ -4,3 +4,4 @@
  */
 
 export var num2 = 1
+let name = 3
