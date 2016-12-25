@@ -2,12 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/vue-resource.js"></script>
+    <title>test</title>
 </head>
 <body>
-<div id="test">
-dddd
+<div id="app">
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">reverseMessage</button>
+    <button v-on:click="submit">提交</button>
+
 </div>
 </body>
-<script type="text/javascript" src="../assets/js/main.js"></script>
+<script>
+    Vue.use(VueResource);
+    new Vue({
+        el:'#app',
+        data:{
+            message:'hello vue.js'
+        },
+        methods:{
+            reverseMessage:function(){
+                this.message = this.message.split(' ').reverse().join(' ');
+            },
+            submit:function(){
+                this.$http({url: '/message', method: 'POST',data:{message:this.message}})
+                        .then(function (response) {
+                    alert(response.data.msg);
+                }, function (response) {
+                   alert(response.err);
+                });
+            }
+
+        }
+    });
+</script>
 </html>

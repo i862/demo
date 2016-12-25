@@ -14,13 +14,32 @@ var configs = require('./webhook.json');
 
 
 var app = express();
+var router = express.Router();
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
-//app.use(serveStatic(__dirname + '/views'));
-//app.use(serveStatic(__dirname + '/assets'));
+app.use(serveStatic(__dirname + '/views'));
+app.use(serveStatic(__dirname + '/assets'));
 app.use(jsonParser);
-app.get('/test',function(req,res){
-  res.send('o     k');
+app.get('/message',function(req,res){
+  res.send({msg:req.body.message})
+  .end();
+});
+
+app.get('/test/:id',function(req,res){
+  req.body = 'ni hao';
+  Promise.resolve()
+  .then(function(){
+    console.log('aaa');
+    throw new Error('error1');
+    res.send('ok');
+  })
+  .catch(function(err){
+    res.send('catch');
+  });
+});
+app.get('/test1/:name',function(req,res){
+  req.body = 'ni hao';
+  res.send('ok');
 });
 app.post('/git/auto',function(req,res){
 
@@ -52,6 +71,10 @@ app.post('/git/auto',function(req,res){
   }
 });
 
+app.use(function(err, req, res, next){
+  console.log(err.message);
+  res.send({err:err});
+});
 var check = function(value1,value2,res,result){
   if(value1 && value2 && value1 == value2){
     return true;

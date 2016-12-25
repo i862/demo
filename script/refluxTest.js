@@ -1,8 +1,7 @@
 /**
- * Created by menzhongxin on 16/3/1.
+ * Created by menzhongxin on 16/3/8.
  */
 import React from 'react'
-import Reflux from 'reflux'
 import $ from 'jquery'
 var TodoActions = Reflux.createActions([
   'getAll',
@@ -15,16 +14,16 @@ var TodoStore = Reflux.createStore({
   items: [1, 2, 3],
   listenables: [TodoActions],
   onGetAll: function () {
-    //$.get('/all', function (data) {
-      this.items = [{name:'amen',email:'amen@163.com'},{name:'lucy',email:'lucy@163.com'}];
+    $.get('/all', function (data) {
+      this.items = data;
       this.trigger(this.items);
-    //}.bind(this));
+    }.bind(this));
   },
-  onAddItem: function () {
-    //$.post('/add', model, function (data) {
-      this.items.unshift({name:'amen1',email:'amen1@163.com'});
+  onAddItem: function (model) {
+    $.post('/add', model, function (data) {
+      this.items.unshift(data);
       this.trigger(this.items);
-    //}.bind(this));
+    }.bind(this));
   },
   onDeleteItem: function (model, index) {
     $.post('/delete', model, function (data) {
@@ -79,9 +78,7 @@ var TodoItem = React.createClass({
       <div>
         <p>{item.name}</p>
         <p>{item.email}</p>
-        <p><button onclick={this.handleAdd}>添加</button></p>
-        <p><button>删除</button></p>
-        <p><button>修改</button></p>
+        <p>/*操作按钮*/</p>
       </div>
     )
   }
