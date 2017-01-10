@@ -5,3 +5,4 @@
 
 export var num2 = 1
 export var num2 = 3
+let name = 3
